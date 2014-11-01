@@ -1,0 +1,11 @@
+<h1>Make a pokemon!</h1>
+
+<% if params[:format]%>
+<h3> Error! </h3>
+<p><%=params[:format]%></p>
+<%end%>
+
+<%=simple_form_for @pokemon, :url => create_pokemon_path do |f|%>
+    <%= f.text_field :name, label: 'Enter your new pokemons name.'%>
+    <%= f.button :submit%>
+<%end%>
