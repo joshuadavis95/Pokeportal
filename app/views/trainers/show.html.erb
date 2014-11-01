@@ -1,3 +1,34 @@
 <h3>Trainer</h3>
+
 <p>Name: <%= @trainer.name if @trainer.name %></p>
 <p>Email: <%= @trainer.email if @trainer.email %></p>
+
+<%if @trainer.id == current_trainer.id%>
+<%= button_to "Create a pokemon!",
+      pokemons_new_path,
+      :class  => "button medium",
+      :method => :get %>
+<%end%>
+
+<%pokemon = Pokemon.where(trainer_id: @trainer.id)%>
+<%if pokemon != []%>
+    <p>Pokemon:</p>
+    <table>
+    <tr> <td> <b> Name </b> </td> <td> <b> Level </b> </td> 
+     <td> <b> Health </b> </td> <td> <b> Fight! </b> </td> </tr>
+    <%pokemon.each do |x|%>
+        <tr>
+        <td><%= x.name %></td>
+        <td><%= x.level%></td>
+        <td><%= x.health%></td>
+        <td>
+        <%= button_to "Attack!", 
+            attack_path(id: x.id), 
+            :class => "button small", 
+            :method => :patch %></td>
+        </tr>
+    <%end%>
+    </table>
+<%else%>
+    <p> <b> No pokemon! </b> You need to go out there and catch them all! </p>
+<%end%>

@@ -8,7 +8,12 @@
 
 # Make Pokemon
 %w(Squirtle Charmander Bulbasaur Pikachu).each do |name|
-  Pokemon.create name: name, level: rand(1..20)
+  Pokemon.create name: name, level: rand(1..20), health: 100
+end
+
+# Arbitary Pokemon
+(0..100).each do |i|
+  Pokemon.create name: 'Pokemon' + i.to_s, level: rand(1..20), health: 100
 end
 
 # Make other trainers
