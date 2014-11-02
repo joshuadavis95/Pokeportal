@@ -15,17 +15,39 @@
     <p>Pokemon:</p>
     <table>
     <tr> <td> <b> Name </b> </td> <td> <b> Level </b> </td> 
-     <td> <b> Health </b> </td> <td> <b> Fight! </b> </td> </tr>
+    <td> <b> EXP </b> </td>
+     <td> <b> Health </b> </td> <td> <b> Fight! </b> </td> 
+     <%if @trainer.id == current_trainer.id%>
+     <td> <b> Recover! </b> </td>
+     <%end%>
+     </tr>
     <%pokemon.each do |x|%>
-        <tr>
-        <td><%= x.name %></td>
-        <td><%= x.level%></td>
-        <td><%= x.health%></td>
-        <td>
-        <%= button_to "Attack!", 
-            attack_path(id: x.id), 
-            :class => "button small", 
-            :method => :patch %></td>
+        <%if x.health > 0 or @trainer.id == current_trainer.id%>
+            <tr>
+            <td><%= x.name %></td>
+            <td><%= x.level%></td>
+            <td><%= x.exp%></td>
+            <td><%= x.health%></td>
+            <td> 
+                <%lst = Pokemon.where(trainer_id: current_trainer.id)%>
+                <%=simple_form_for Pokemon.new, 
+                    :url => attack_path(:victim => x.id),
+                    :method => :patch do |g|%>
+
+                    <%=g.input :id, collection: lst, label: false, 
+                    :include_blank => false%>
+                    <%=g.button :submit, 'Attack'%>
+                <%end%>
+            </td>
+        <%end%>
+        <%if @trainer.id == current_trainer.id%>
+            <td>
+            <%= button_to "Heal!", 
+                heal_path(id: x.id), 
+                :class => "button small", 
+                :method => :patch %>
+            </td>
+        <%end%>
         </tr>
     <%end%>
     </table>
