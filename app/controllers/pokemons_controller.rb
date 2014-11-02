@@ -14,7 +14,7 @@ class PokemonsController < ApplicationController
         if test
             redirect_to trainer_path(current_trainer)
         else
-            redirect_to pokemons_new_path(p.errors.full_messages)
+            redirect_to pokemons_new_path(:err => p.errors.full_messages)
         end
     end
 
