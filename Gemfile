@@ -14,6 +14,7 @@ gem 'devise'
 gem 'foundation-rails'
 gem 'simple_form'
 gem 'rails_12factor'
+gem 'sqlite3'
 
 group :development do
   gem 'sqlite3'
